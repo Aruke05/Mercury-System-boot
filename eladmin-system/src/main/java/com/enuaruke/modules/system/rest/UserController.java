@@ -19,6 +19,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.enuaruke.utils.PageUtil;
 import com.enuaruke.utils.RsaUtils;
 import com.enuaruke.utils.SecurityUtils;
+import com.enuaruke.utils.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -122,7 +123,11 @@ public class UserController {
     @PreAuthorize("@el.check('user:edit')")
     public ResponseEntity<Object> updateUser(@Validated(User.Update.class) @RequestBody User resources) throws Exception {
         checkLevel(resources);
-        userService.update(resources);
+        User update = userService.update(resources);
+        // 修改密码
+        if(!StringUtils.isEmpty(resources.getPassword())){
+            userService.updatePass(update.getUsername(),passwordEncoder.encode(resources.getPassword()));
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

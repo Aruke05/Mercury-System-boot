@@ -48,10 +48,12 @@ public interface UserService {
 
     /**
      * 编辑用户
+     *
      * @param resources /
+     * @return
      * @throws Exception /
      */
-    void update(User resources) throws Exception;
+    User update(User resources) throws Exception;
 
     /**
      * 删除用户

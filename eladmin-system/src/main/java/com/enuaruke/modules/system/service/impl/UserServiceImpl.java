@@ -98,20 +98,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(User resources) throws Exception {
+    public User update(User resources) throws Exception {
         User user = userRepository.findById(resources.getId()).orElseGet(User::new);
         ValidationUtil.isNull(user.getId(), "User", "id", resources.getId());
         User user1 = userRepository.findByUsername(resources.getUsername());
-        User user2 = userRepository.findByEmail(resources.getEmail());
-        User user3 = userRepository.findByPhone(resources.getPhone());
         if (user1 != null && !user.getId().equals(user1.getId())) {
             throw new EntityExistException(User.class, "username", resources.getUsername());
-        }
-        if (user2 != null && !user.getId().equals(user2.getId())) {
-            throw new EntityExistException(User.class, "email", resources.getEmail());
-        }
-        if (user3 != null && !user.getId().equals(user3.getId())) {
-            throw new EntityExistException(User.class, "phone", resources.getPhone());
         }
         // 如果用户的角色改变
         if (!resources.getRoles().equals(user.getRoles())) {
@@ -139,6 +131,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         // 清除缓存
         delCaches(user.getId(), user.getUsername());
+        return user;
     }
 
     @Override
