@@ -27,11 +27,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.5.9</version>
-        </dependency>
-        <dependency>
             <groupId>com-enuaruke</groupId>
             <artifactId>com-enuaruke-utils</artifactId>
             <version>1.0</version>
@@ -43,4 +38,14 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
