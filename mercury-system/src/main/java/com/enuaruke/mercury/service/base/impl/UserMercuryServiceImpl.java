@@ -1,9 +1,9 @@
 package com.enuaruke.mercury.service.base.impl;
 
-import com.enuaruke.base.MercuryPage;
 import com.enuaruke.mercury.controller.model.UserQueryParameter;
 import com.enuaruke.mercury.mapper.UserMercuryMapper;
 import com.enuaruke.mercury.service.base.UserMercuryService;
+import com.enuaruke.utils.parameter.page.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +18,9 @@ public class UserMercuryServiceImpl implements UserMercuryService {
     private UserMercuryMapper userMapper;
 
     @Override
-    public MercuryPage queryUserPage(UserQueryParameter parameter) {
+    public Page queryUserPage(UserQueryParameter parameter) {
         parameter.getPage().setTotal(userMapper.selectUserTotal());
-        parameter.getPage().setList(userMapper.selectUserByParameter(parameter));
+        parameter.getPage().setRecords(userMapper.selectUserByParameter(parameter));
         return parameter.getPage();
     }
 }

@@ -1,6 +1,7 @@
 package com.enuaruke.mercury.controller.model;
 
 import com.enuaruke.base.MercuryPage;
+import com.enuaruke.utils.parameter.ViewModel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +11,10 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserQueryParameter {
+public class UserQueryParameter extends ViewModel {
 
     String userName;
     String spaceName;
-    MercuryPage page;
 
     public String getUserName() {
         return userName;
@@ -32,11 +32,4 @@ public class UserQueryParameter {
         this.spaceName = spaceName;
     }
 
-    public MercuryPage getPage() {
-        return page;
-    }
-
-    public void setPage(MercuryPage page) {
-        this.page = page;
-    }
 }

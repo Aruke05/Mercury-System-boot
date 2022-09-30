@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.enuaruke.mercury.mapper.UserMercuryMapper">
+    <update id="updateUser">
+        update sys_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName">
+                username = #{userName},
+            </if>
+            <if test="spaceName">
+                space_name = #{spaceName},
+            </if>
+        </trim>
+        where user_id = #{userId}
+    </update>
 
     <select id="selectUserTotal" resultType="java.lang.Integer">
         SELECT count(*) from sys_user
     </select>
     <select id="selectUserByParameter" resultType="com.enuaruke.mercury.data.model.User">
-        select * from sys_user
-        limit ${(page.page-1)*page.size},${page.size}
+        select t1.*, t2.name as dept_name, t4.name as role_name
+        from sys_user t1
+        left join sys_dept t2 on t1.dept_id  = t2.dept_id
+        left join sys_users_roles t3 on t1.user_id = t3.user_id
+        left join sys_role t4 on t3.role_id = t4.role_id
+        where
+            1 = 1
+        <if test="userName != null">
+            and t1.username = #{userName}
+        </if>
+        <if test="spaceName != null">
+            and t1.space_name = #{spaceName}
+        </if>
+        <if test="page != null">
+            limit ${(page.current-1)*page.size},${page.size}
+        </if>
     </select>
 </mapper>

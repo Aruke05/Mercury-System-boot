@@ -1,8 +1,9 @@
 package com.enuaruke.mercury.controller.base;
 
-import com.enuaruke.base.MercuryPage;
+import com.enuaruke.annotation.Result;
 import com.enuaruke.mercury.controller.model.UserQueryParameter;
 import com.enuaruke.mercury.service.base.UserMercuryService;
+import com.enuaruke.utils.parameter.page.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,8 +23,8 @@ public class UserMercuryController {
     private UserMercuryService userService;
 
     @RequestMapping("queryUserPage")
-    public MercuryPage queryUserPage(HttpServletRequest request, @RequestBody UserQueryParameter parameter){
-        MercuryPage page = userService.queryUserPage(parameter);
-        return page;
+    public Result<Object> queryUserPage(HttpServletRequest request, @RequestBody UserQueryParameter parameter){
+        Page page = userService.queryUserPage(parameter);
+        return Result.ok(page);
     }
 }

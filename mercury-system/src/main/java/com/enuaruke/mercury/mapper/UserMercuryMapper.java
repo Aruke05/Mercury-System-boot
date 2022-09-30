@@ -16,4 +16,6 @@ public interface UserMercuryMapper{
     Integer selectUserTotal();
 
     List<User> selectUserByParameter(UserQueryParameter parameter);
+
+    void updateUser(User user);
 }
