@@ -31,7 +31,12 @@ spring:
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PWD:mercury911}
     #连接超时时间
-    timeout: 6000
+    timeout: 50000ms
+    lettuce:
+      cluster:
+        refresh:
+          period: 600000
+          adaptive: true
 
 task:
   pool:
