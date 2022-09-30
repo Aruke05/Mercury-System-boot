@@ -34,6 +34,8 @@ public class User extends BaseEntity implements Serializable {
     private String avatarPath;
     private String password;
     private Boolean enabled;
+    private String deptName;
+    private String roleName;
 
     @Override
     public boolean equals(Object o) {
