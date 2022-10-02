@@ -16,6 +16,19 @@
 
     <select id="selectUserTotal" resultType="java.lang.Integer">
         SELECT count(*) from sys_user
+        where 1 = 1
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+        <if test="userName != null">
+            and username = #{userName}
+        </if>
+        <if test="nickName != null">
+            or nick_name = #{nickName}
+        </if>
+        <if test="spaceName != null">
+            and space_name = #{spaceName}
+        </if>
     </select>
     <select id="selectUserByParameter" resultType="com.enuaruke.mercury.data.model.User">
         select t1.*, t2.name as dept_name, t4.name as role_name
@@ -25,8 +38,14 @@
         left join sys_role t4 on t3.role_id = t4.role_id
         where
             1 = 1
+        <if test="userId != null">
+            and t1.user_id = #{userId}
+        </if>
         <if test="userName != null">
             and t1.username = #{userName}
+        </if>
+        <if test="nickName != null">
+            or t1.nick_name = #{nickName}
         </if>
         <if test="spaceName != null">
             and t1.space_name = #{spaceName}

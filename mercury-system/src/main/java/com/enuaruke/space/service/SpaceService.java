@@ -6,4 +6,6 @@ package com.enuaruke.space.service;
  */
 public interface SpaceService {
     void updateOrAddSpaceName(String userName, String spaceName);
+
+    String getSpaceName(String userName);
 }

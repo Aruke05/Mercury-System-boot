@@ -13,8 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserQueryParameter extends ViewModel {
 
+    String userId;
     String userName;
     String spaceName;
+
+    String nickName;
 
     public String getUserName() {
         return userName;
@@ -32,4 +35,19 @@ public class UserQueryParameter extends ViewModel {
         this.spaceName = spaceName;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

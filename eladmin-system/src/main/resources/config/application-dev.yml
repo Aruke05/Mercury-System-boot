@@ -82,3 +82,6 @@ file:
   maxSize: 100
   avatarMaxSize: 5
 
+mercury:
+  aes:
+    key: Enu

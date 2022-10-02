@@ -19,7 +19,7 @@ public class UserMercuryServiceImpl implements UserMercuryService {
 
     @Override
     public Page queryUserPage(UserQueryParameter parameter) {
-        parameter.getPage().setTotal(userMapper.selectUserTotal());
+        parameter.getPage().setTotal(userMapper.selectUserTotal(parameter));
         parameter.getPage().setRecords(userMapper.selectUserByParameter(parameter));
         return parameter.getPage();
     }

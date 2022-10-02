@@ -52,4 +52,10 @@ public class SpaceController {
         spaceService.updateOrAddSpaceName(userQueryParameter.getUserName(), userQueryParameter.getSpaceName());
         return Result.ok();
     }
+
+    @RequestMapping("/getSpaceName")
+    public Result getSpaceName(@RequestBody UserQueryParameter userQueryParameter){
+        String spaceName = spaceService.getSpaceName(userQueryParameter.getUserName());
+        return Result.ok(spaceName);
+    }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface UserMercuryMapper{
 
-    Integer selectUserTotal();
+    Integer selectUserTotal(UserQueryParameter parameter);
 
     List<User> selectUserByParameter(UserQueryParameter parameter);
 
