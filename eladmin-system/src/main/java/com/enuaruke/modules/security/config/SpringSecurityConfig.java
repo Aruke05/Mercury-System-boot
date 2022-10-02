@@ -119,7 +119,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/druid/**").permitAll()
                 // 放行OPTIONS请求
                 // 自定义匿名访问所有url放行：允许匿名和带Token访问，细腻化到每个 Request 类型
-                .antMatchers("/space/**").permitAll()
+                .antMatchers("/space/decrypt/**").permitAll()
+                .antMatchers("/space/encrypt/**").permitAll()
+                .antMatchers("/space/randomPerson/**").permitAll()
                 // GET
                 .antMatchers(HttpMethod.GET, anonymousUrls.get(RequestMethodEnum.GET.getType()).toArray(new String[0])).permitAll()
                 // POST
