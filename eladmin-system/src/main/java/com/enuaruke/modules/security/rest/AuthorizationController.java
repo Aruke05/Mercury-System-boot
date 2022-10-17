@@ -16,6 +16,15 @@
 package com.enuaruke.modules.security.rest;
 
 import cn.hutool.core.util.IdUtil;
+import com.enuaruke.mercury.controller.model.UserQueryParameter;
+import com.enuaruke.mercury.data.model.User;
+import com.enuaruke.mercury.mapper.UserMercuryMapper;
+import com.enuaruke.modules.security.service.dto.AuthorityDto;
+import com.enuaruke.modules.system.service.dto.DeptSmallDto;
+import com.enuaruke.modules.system.service.dto.JobSmallDto;
+import com.enuaruke.modules.system.service.dto.RoleSmallDto;
+import com.enuaruke.modules.system.service.dto.UserLoginDto;
+import com.enuaruke.modules.system.service.mapstruct.UserMapper;
 import com.wf.captcha.base.Captcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +47,7 @@ import com.enuaruke.utils.RsaUtils;
 import com.enuaruke.utils.RedisUtils;
 import com.enuaruke.utils.SecurityUtils;
 import com.enuaruke.utils.StringUtils;
+import org.hibernate.mapping.Array;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,8 +58,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -70,6 +79,9 @@ public class AuthorizationController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     @Resource
     private LoginProperties loginProperties;
+
+    @Resource
+    private UserMercuryMapper userMercuryMapper;
 
     @Log("用户登录")
     @ApiOperation("登录授权")
@@ -108,6 +120,35 @@ public class AuthorizationController {
             //踢掉之前已经登录的token
             onlineUserService.checkLoginOnUser(authUser.getUsername(), token);
         }
+        return ResponseEntity.ok(authInfo);
+    }
+
+    @Log("游客登录")
+    @ApiOperation("登录授权")
+    @AnonymousPostMapping(value = "/loginGuest")
+    public ResponseEntity<Object> loginGuest(HttpServletRequest request) throws Exception {
+        AuthUserDto authUser = new AuthUserDto();
+        authUser.setUsername("guest");
+        authUser.setPassword(RsaUtils.encryptByPrivateKey(RsaProperties.privateKey, "mercury-guest"));
+        // 密码解密
+        String password = "mercury-guest";
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(authUser.getUsername(), password);
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // 生成令牌与第三方系统获取令牌方式`
+        // UserDetails userDetails = userDetailsService.loadUserByUsername(userInfo.getUsername());
+        // Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        // SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = tokenProvider.createToken(authentication);
+        final JwtUserDto jwtUserDto = (JwtUserDto) authentication.getPrincipal();
+        // 保存在线信息
+        onlineUserService.save(jwtUserDto, token, request);
+        // 返回 token 与 用户信息
+        Map<String, Object> authInfo = new HashMap<String, Object>(2) {{
+            put("token", properties.getTokenStartWith() + token);
+            put("user", jwtUserDto);
+        }};
         return ResponseEntity.ok(authInfo);
     }
 
