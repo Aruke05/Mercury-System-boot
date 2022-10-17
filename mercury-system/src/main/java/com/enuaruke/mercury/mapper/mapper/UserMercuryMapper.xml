@@ -14,7 +14,25 @@
         where user_id = #{userId}
     </update>
 
-    <select id="selectUserTotal" resultType="java.lang.Integer">
+    <update id="syncEnuNode" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into enu_node(
+        id,
+        name,
+        mark,
+        space_name
+        )
+        values
+        <foreach collection="nodeList" index="index" item="item" separator=",">
+            ( #{item.id}, #{item.name}, #{item.mark}, #{item.space_name})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+            id = VALUES(id),
+            name = VALUES(name),
+            mark = VALUES(mark),
+            space_name = VALUES(space_name)
+    </update>
+
+    <select id="selectUserTotal" resultType="java.lang.Integer" >
         SELECT count(*) from sys_user
         where 1 = 1
         <if test="userId != null">
@@ -41,6 +59,12 @@
         <if test="userId != null">
             and t1.user_id = #{userId}
         </if>
+        <if test="userIds != null">
+            and t1.user_id in
+            <foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
         <if test="userName != null">
             and t1.username = #{userName}
         </if>
@@ -52,6 +76,15 @@
         </if>
         <if test="page != null">
             limit ${(page.current-1)*page.size},${page.size}
+        </if>
+    </select>
+    <select id="selectUserIdByRoles" resultType="java.lang.String">
+        select user_id from sys_users_roles
+        <if test="roles != null">
+            where role_id in
+            <foreach collection="roles" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
     </select>
 </mapper>

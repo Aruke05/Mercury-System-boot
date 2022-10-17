@@ -3,7 +3,10 @@ package com.enuaruke.mercury.controller.model;
 import com.enuaruke.base.MercuryPage;
 import com.enuaruke.utils.parameter.ViewModel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * @author: 05
@@ -11,43 +14,13 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class UserQueryParameter extends ViewModel {
 
     String userId;
+    List<String> userIds;
     String userName;
     String spaceName;
-
     String nickName;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getSpaceName() {
-        return spaceName;
-    }
-
-    public void setSpaceName(String spaceName) {
-        this.spaceName = spaceName;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

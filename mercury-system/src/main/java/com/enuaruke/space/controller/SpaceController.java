@@ -60,8 +60,16 @@ public class SpaceController {
         return Result.ok(spaceName);
     }
 
+    /**
+     * public
+     * 获取测试用随机个人信息
+     * @param num
+     * @return
+     */
     @RequestMapping("/randomPerson")
     public Result randomPerson(Integer num){
+        if(num < 0 || num > 100)
+            throw new RuntimeException("?");
         List<Person> random = PersonUtil.random(num);
         return Result.ok(random);
     }

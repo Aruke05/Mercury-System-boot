@@ -80,7 +80,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // 获取匿名标记
         Map<String, Set<String>> anonymousUrls = getAnonymousUrl(handlerMethodMap);
         httpSecurity
-                // 禁用 CSRF
+                // 禁用CSRF保护
                 .csrf().disable()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 // 授权异常
@@ -119,6 +119,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/druid/**").permitAll()
                 // 放行OPTIONS请求
                 // 自定义匿名访问所有url放行：允许匿名和带Token访问，细腻化到每个 Request 类型
+                .antMatchers("/api/**").permitAll() //调用api不需要拦截
                 .antMatchers("/space/decrypt/**").permitAll()
                 .antMatchers("/space/encrypt/**").permitAll()
                 .antMatchers("/space/randomPerson/**").permitAll()

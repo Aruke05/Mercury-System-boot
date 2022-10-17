@@ -17,5 +17,9 @@ public interface UserMercuryMapper{
 
     List<User> selectUserByParameter(UserQueryParameter parameter);
 
+    List<String> selectUserIdByRoles(List<String> roles);
+
     void updateUser(User user);
+
+    void syncEnuNode(List nodeList);
 }
