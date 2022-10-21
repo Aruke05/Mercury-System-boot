@@ -27,6 +27,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.enuaruke</groupId>
+            <artifactId>eladmin-logging</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
             <groupId>com-enuaruke</groupId>
             <artifactId>com-enuaruke-utils</artifactId>
             <version>1.4</version>

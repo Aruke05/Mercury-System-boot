@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enuaruke.mercury.mapper.MessageBoardMercuryMapper">
+
+    <insert id="submit">
+        INSERT INTO t_messageBoard
+            (user_id, `desc`, insert_time)
+        VALUES(#{userId}, #{desc}, NOW());
+    </insert>
+    <delete id="deleteById">
+        delete from t_messageBoard
+        where id = #{id}
+    </delete>
+    <select id="selectAll" resultType="com.enuaruke.mercury.data.model.MessageBoard">
+        select t1.id, t2.user_id, t2.username as userName, t2.nick_name,t2.avatar_name ,t1.desc, t1.insert_time from t_messageBoard t1
+        left join sys_user t2 on t1.user_id = t2.user_id
+        order by insert_time desc
+    </select>
+</mapper>

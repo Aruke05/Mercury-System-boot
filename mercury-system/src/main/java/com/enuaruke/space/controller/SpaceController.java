@@ -1,6 +1,6 @@
 package com.enuaruke.space.controller;
 
-import com.enuaruke.annotation.AnonymousAccess;
+import com.enuaruke.annotation.Log;
 import com.enuaruke.annotation.Result;
 import com.enuaruke.mercury.controller.model.UserQueryParameter;
 import com.enuaruke.space.service.SpaceService;
@@ -8,10 +8,7 @@ import com.enuaruke.utils.random.Data.Person;
 import com.enuaruke.utils.random.PersonUtil;
 import com.enuaruke.utils.word.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,6 +45,7 @@ public class SpaceController {
         return Result.ok(enu);
     }
 
+    @Log("加密昵称")
     @RequestMapping("/saveSpaceName")
     public Result saveSpaceName(@RequestBody UserQueryParameter userQueryParameter){
         spaceService.updateOrAddSpaceName(userQueryParameter.getUserName(), userQueryParameter.getSpaceName());
