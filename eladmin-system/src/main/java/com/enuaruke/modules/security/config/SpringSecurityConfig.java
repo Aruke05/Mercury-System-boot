@@ -123,6 +123,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/space/decrypt/**").permitAll()
                 .antMatchers("/space/encrypt/**").permitAll()
                 .antMatchers("/space/randomPerson/**").permitAll()
+                .antMatchers("/demo/**").permitAll()
                 // GET
                 .antMatchers(HttpMethod.GET, anonymousUrls.get(RequestMethodEnum.GET.getType()).toArray(new String[0])).permitAll()
                 // POST

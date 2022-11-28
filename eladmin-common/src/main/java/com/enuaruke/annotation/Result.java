@@ -34,8 +34,6 @@ public class Result<T> implements Serializable {
         return this;
     }
 
-    /** @deprecated */
-    @Deprecated
     public static Result<Object> ok() {
         Result<Object> r = new Result();
         r.setSuccess(true);
@@ -44,8 +42,6 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-    /** @deprecated */
-    @Deprecated
     public static Result<Object> ok(String msg) {
         Result<Object> r = new Result();
         r.setSuccess(true);
@@ -54,8 +50,6 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-    /** @deprecated */
-    @Deprecated
     public static Result<Object> ok(Object data) {
         Result<Object> r = new Result();
         r.setSuccess(true);

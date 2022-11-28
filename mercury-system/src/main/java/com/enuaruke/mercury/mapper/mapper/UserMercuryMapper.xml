@@ -57,6 +57,7 @@
                t1.email,
                t1.avatar_name,
                t1.avatar_path,
+               t1.space_name,
                t2.name as dept_name,
                t4.name as role_name
         from sys_user t1
