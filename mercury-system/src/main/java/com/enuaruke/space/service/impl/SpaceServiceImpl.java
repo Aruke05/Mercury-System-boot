@@ -9,6 +9,7 @@ import com.enuaruke.utils.word.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,10 +44,11 @@ public class SpaceServiceImpl implements SpaceService {
         }
         User user = users.get(0);
         try {
-            String src = MercuryConfig.AESkey + "9-" + (user.getUserId() < 10 ? "0" + user.getUserId() : user.getUserId()) + " " + user.getNickName();
+            String src = MercuryConfig.AESkey + "IX" + (user.getUserId() < 10 ? "0" + user.getUserId() : user.getUserId()) + " " + user.getNickName();
             return AESUtil.encrypt(src ,MercuryConfig.AESkey);
         } catch (Exception e) {
             throw new RuntimeException("加密失败");
         }
     }
+
 }
